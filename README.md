@@ -25,6 +25,7 @@ You will need the [s.el](https://github.com/magnars/s.el) package installed.
 
 The following variables are exported:
 
+- `cc-compiler-compiler-stddef ;; =>  Location of the stddef.h file`
 - `cc-compiler-compiler-version ;; =>  Compiler's version aka -dumpversion for GCC `
 - `cc-compiler-compiler-machine  ;; => Compiler's machine aka -dumpmachine for GCC`
 - `cc-compiler-system-include-path ;; => List of compiler's system include paths`

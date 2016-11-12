@@ -44,6 +44,7 @@
   :type 'boolean
   :group 'cc-compiler)
 
+(defvar cc-compiler-compiler-stddef nil)
 (defvar cc-compiler-compiler-version nil)
 (defvar cc-compiler-compiler-machine nil)
 (defvar cc-compiler-system-include-path nil)
@@ -89,6 +90,24 @@
              (shell-command-to-string command)))
       (when cc-compiler-debug
         (message "Compiler machine : %s" cc-compiler-compiler-machine)))
+
+    (let ((command
+           (s-concat compiler " -E - <<<'#include<stddef.h>' | grep stddef")))
+      (when cc-compiler-debug
+        (message "Executing : %s" command))
+      (setq cc-compiler-compiler-stddef
+            (s-chomp
+             (car
+              (nthcdr
+               2
+               (s-split
+                " "
+                (s-trim
+                 (car
+                  (s-lines
+                   (shell-command-to-string "gcc -E - <<<'#include<stddef.h>' | grep stddef")))))))))
+      (when cc-compiler-debug
+        (message "stddef.h : %s" command)))
     (setq cc-compiler-compiler-version-major
           (s-match "^[0-9]+" cc-compiler-compiler-version))
     (when cc-compiler-debug
